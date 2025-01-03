@@ -13,16 +13,21 @@ services:
     depends_on:
       - backend
     volumes:
-      - ./Streamlit_Frontend:/app/backend
+      - ./Streamlit_Frontend:/app/frontend  # Mount the frontend directory to /app/frontend
+      - /Users/karan/Documents/Diet-Recommendation-System/FastAPI_Backend:/app/backend  # Mount the backend directory to /app/backend
+      - /Users/karan/Documents/Diet-Recommendation-System/FastAPI_Backend/diet-8571f-firebase-adminsdk-d43ko-de38d05eff.json:/app/frontend/diet-8571f-firebase-adminsdk-d43ko-de38d05eff.json  # Mount Firebase credentials to the frontend service
 
   backend:
     build:
       context: .
       dockerfile: FastAPI_Backend/Dockerfile
     image: backend:latest
+    volumes:
+      - /Users/karan/Documents/Diet-Recommendation-System/FastAPI_Backend:/app/backend  # Mount the backend directory to /app/backend
     ports:
       - 8080:8080
     networks:
       - project_network
+
 networks:
   project_network:
